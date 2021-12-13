@@ -7,13 +7,12 @@ const TodoInsert = ({ onInsert }) => {
   const [value, setValue] = useState('');
 
   const onChange = useCallback((e) => {
-    //
     setValue(e.target.value);
   }, []);
 
   const onSubmit = useCallback(
     (e) => {
-      onInsert(value);
+      onInsert(value); //부모컴포넌트에서 onInsert(value)실행
       setValue('');
       e.preventDefault();
     },
@@ -21,6 +20,7 @@ const TodoInsert = ({ onInsert }) => {
   );
 
   return (
+    //   onSubmit은 엔터 인식
     <form className="TodoInsert" onSubmit={onSubmit}>
       <input
         placeholder="할 일을 입력하세요"

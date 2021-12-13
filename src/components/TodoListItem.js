@@ -7,8 +7,10 @@ import {
 import './TodoListItem.scss';
 import cn from 'classnames';
 
-const TodoListItem = ({ todo }) => {
-  const { text, checked } = todo;
+//props로 받아온 onRemove를 버튼에 달아줌
+const TodoListItem = ({ todo, onRemove }) => {
+  const { text, checked, id } = todo;
+
   return (
     <div className="TodoListItem">
       {/* cn은 checked가 true면 checked를 클래스에 추가해준다. */}
@@ -16,7 +18,7 @@ const TodoListItem = ({ todo }) => {
         {checked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
         <div className="text">{text}</div>
       </div>
-      <div className="remove">
+      <div className="remove" onClick={() => onRemove(id)}>
         <MdRemoveCircleOutline />
       </div>
     </div>
