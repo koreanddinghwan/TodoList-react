@@ -1,7 +1,7 @@
 import TodoTemplate from './components/TodoTemplate';
 import TodoInsert from './components/TodoInsert';
 import TodoList from './components/TodoList';
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 
 function App() {
   const [todos, setTodos] = useState([
@@ -16,15 +16,30 @@ function App() {
       checked: true,
     },
     {
-      id: 1,
+      id: 3,
       text: '일정관리 앱 만들기',
       checked: false,
     },
   ]);
 
+  const nextId = useRef(4); //고유변수생성
+
+  const onInsert = useCallback(
+    (text) => {
+      const todo = {
+        id: nextId.current,
+        text,
+        checked: false,
+      };
+      setTodos(todos.concat(todo));
+      nextId.current += 1;
+    },
+    [todos], //todos라는 state의 변화있을때만.
+  );
+
   return (
     <TodoTemplate>
-      <TodoInsert />
+      <TodoInsert onInsert={onInsert} />
       <TodoList todos={todos} />
     </TodoTemplate>
   );
